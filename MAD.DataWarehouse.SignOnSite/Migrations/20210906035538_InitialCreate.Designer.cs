@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MAD.DataWarehouse.SignOnSite.Migrations
 {
     [DbContext(typeof(SignOnSiteDbContext))]
-    [Migration("20210906001402_InitialCreate")]
+    [Migration("20210906035538_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,8 +23,8 @@ namespace MAD.DataWarehouse.SignOnSite.Migrations
 
             modelBuilder.Entity("MAD.DataWarehouse.SignOnSite.Api.Site", b =>
                 {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.Property<string>("InternalReference")
                         .HasColumnType("nvarchar(max)");
@@ -63,12 +63,9 @@ namespace MAD.DataWarehouse.SignOnSite.Migrations
                     b.Property<int>("SiteId")
                         .HasColumnType("int");
 
-                    b.Property<long?>("SiteId1")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("SiteId1");
+                    b.HasIndex("SiteId");
 
                     b.ToTable("SiteAttendance");
                 });
@@ -77,7 +74,9 @@ namespace MAD.DataWarehouse.SignOnSite.Migrations
                 {
                     b.HasOne("MAD.DataWarehouse.SignOnSite.Api.Site", "Site")
                         .WithMany()
-                        .HasForeignKey("SiteId1");
+                        .HasForeignKey("SiteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.OwnsOne("MAD.DataWarehouse.SignOnSite.Api.SiteAttendance+SACompany", "Company", b1 =>
                         {

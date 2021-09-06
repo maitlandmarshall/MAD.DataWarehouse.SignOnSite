@@ -22,7 +22,7 @@ namespace MAD.DataWarehouse.SignOnSite
             serviceDescriptors.AddScoped<SiteAttendanceApiConsumer>();
         }
 
-        public async Task Configure(IGlobalConfiguration hangfireConfig)
+        public async Task Configure()
         {
 
         }

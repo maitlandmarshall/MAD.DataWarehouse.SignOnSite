@@ -24,8 +24,6 @@ namespace MAD.DataWarehouse.SignOnSite
         private static void MigrateAndStartRecurringJobs(IServiceProvider services)
         {
             var dbContext = services.GetRequiredService<SignOnSiteDbContext>();
-            var recurringJobManager = services.GetRequiredService<IRecurringJobManager>();
-
             dbContext.Database.Migrate();
 
             JobFactory.CreateRecurringJob<SiteApiConsumer>("GetSites", y => y.GetSites(0), Cron.Daily());

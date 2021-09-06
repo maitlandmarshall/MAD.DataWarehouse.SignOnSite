@@ -11,7 +11,7 @@ namespace MAD.DataWarehouse.SignOnSite.Migrations
                 name: "Site",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     InternalReference = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
@@ -37,24 +37,23 @@ namespace MAD.DataWarehouse.SignOnSite.Migrations
                     User_FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     User_LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     User_Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SiteId = table.Column<int>(type: "int", nullable: false),
-                    SiteId1 = table.Column<long>(type: "bigint", nullable: true)
+                    SiteId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SiteAttendance", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SiteAttendance_Site_SiteId1",
-                        column: x => x.SiteId1,
+                        name: "FK_SiteAttendance_Site_SiteId",
+                        column: x => x.SiteId,
                         principalTable: "Site",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_SiteAttendance_SiteId1",
+                name: "IX_SiteAttendance_SiteId",
                 table: "SiteAttendance",
-                column: "SiteId1");
+                column: "SiteId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

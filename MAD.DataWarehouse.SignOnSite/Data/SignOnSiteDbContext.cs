@@ -30,7 +30,7 @@ namespace MAD.DataWarehouse.SignOnSite.Data
                 cfg.OwnsOne(y => y.Company);
                 cfg.OwnsOne(y => y.User);
 
-                cfg.HasOne(y => y.Site).WithMany();
+                cfg.HasOne(y => y.Site).WithMany().HasForeignKey(y => y.SiteId);
             });
         }
     }
