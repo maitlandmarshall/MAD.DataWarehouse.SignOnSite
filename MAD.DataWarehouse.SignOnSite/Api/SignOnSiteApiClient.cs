@@ -19,7 +19,7 @@ namespace MAD.DataWarehouse.SignOnSite.Api
             this.httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", appConfig.SignOnSiteKey);
         }
 
-        public async Task<ApiResponse<Site>> GetSites(int limit, int offset)
+        public async Task<ApiResponse<Site>> GetSites(int? limit = null, int? offset = null)
         {
             var endpoint = "/api/public/sites";
             var query = this.CreateQueryString(new Dictionary<string, object>
@@ -34,7 +34,7 @@ namespace MAD.DataWarehouse.SignOnSite.Api
             return response;
         }
 
-        public async Task<ApiResponse<SiteAttendance>> GetSiteAttendances(int limit, int offset, int siteId, DateTime? filter_start_time = null, DateTime? filter_end_time = null, string order_direction = null)
+        public async Task<ApiResponse<SiteAttendance>> GetSiteAttendances(int siteId, int? limit = null, int? offset = null, DateTime? filter_start_time = null, DateTime? filter_end_time = null, string order_direction = null)
         {
             var endpoint = $"/api/public/sites/{siteId}/attendances";
             var query = this.CreateQueryString(new Dictionary<string, object>
