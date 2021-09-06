@@ -12,8 +12,6 @@ namespace MAD.DataWarehouse.SignOnSite.Jobs
 {
     public class SiteApiConsumer
     {
-        const int Limit = 100;
-
         private readonly SignOnSiteApiClient apiClient;
         private readonly SignOnSiteDbContext signOnSiteDbContext;
         private readonly IBackgroundJobClient backgroundJobClient;
@@ -27,7 +25,7 @@ namespace MAD.DataWarehouse.SignOnSite.Jobs
 
         public async Task GetSites(int offset = 0)
         {
-            var apiResult = await this.apiClient.GetSites(limit: Limit, offset: 0);
+            var apiResult = await this.apiClient.GetSites(limit: AppConfig.ApiPageSize, offset: 0);
             var sites = apiResult.Data.ToList();
 
             await this.signOnSiteDbContext.BulkInsertOrUpdateAsync(sites);
@@ -49,7 +47,7 @@ namespace MAD.DataWarehouse.SignOnSite.Jobs
             if (apiResult.LastPage == apiResult.CurrentPage)
                 return;
 
-            this.backgroundJobClient.Enqueue<SiteApiConsumer>(s => s.GetSites(offset + Limit));
+            this.backgroundJobClient.Enqueue<SiteApiConsumer>(s => s.GetSites(offset + AppConfig.ApiPageSize));
         }
     }
 }
