@@ -8,13 +8,13 @@ namespace MAD.DataWarehouse.SignOnSite.Api
     public partial class SiteAttendance
     {
         [JsonProperty("id")]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [JsonProperty("signon_at")]
         public DateTimeOffset SignonAt { get; set; }
 
         [JsonProperty("signoff_at")]
-        public DateTimeOffset SignoffAt { get; set; }
+        public DateTimeOffset? SignoffAt { get; set; }
 
         [JsonProperty("company")]
         public SACompany Company { get; set; }
@@ -31,14 +31,14 @@ namespace MAD.DataWarehouse.SignOnSite.Api
         [JsonProperty("user")]
         public SAUser User { get; set; }
 
-        public long SiteId { get; set; }
+        public int SiteId { get; set; }
 
         public virtual Site Site { get; set; }
 
         public class SACompany
         {
             [JsonProperty("id")]
-            public long Id { get; set; }
+            public int Id { get; set; }
 
             [JsonProperty("name")]
             public string Name { get; set; }
@@ -47,7 +47,7 @@ namespace MAD.DataWarehouse.SignOnSite.Api
         public class SAUser
         {
             [JsonProperty("id")]
-            public long Id { get; set; }
+            public int Id { get; set; }
 
             [JsonProperty("first_name")]
             public string FirstName { get; set; }

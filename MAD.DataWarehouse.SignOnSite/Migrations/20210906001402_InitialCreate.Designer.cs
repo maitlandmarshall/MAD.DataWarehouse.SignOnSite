@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MAD.DataWarehouse.SignOnSite.Migrations
 {
     [DbContext(typeof(SignOnSiteDbContext))]
-    [Migration("20210906000555_InitialCreate")]
+    [Migration("20210906001402_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,8 +42,8 @@ namespace MAD.DataWarehouse.SignOnSite.Migrations
 
             modelBuilder.Entity("MAD.DataWarehouse.SignOnSite.Api.SiteAttendance", b =>
                 {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsHidden")
                         .HasColumnType("bit");
@@ -54,18 +54,21 @@ namespace MAD.DataWarehouse.SignOnSite.Migrations
                     b.Property<bool>("IsVisitor")
                         .HasColumnType("bit");
 
-                    b.Property<DateTimeOffset>("SignoffAt")
+                    b.Property<DateTimeOffset?>("SignoffAt")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<DateTimeOffset>("SignonAt")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<long>("SiteId")
+                    b.Property<int>("SiteId")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("SiteId1")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SiteId");
+                    b.HasIndex("SiteId1");
 
                     b.ToTable("SiteAttendance");
                 });
@@ -74,17 +77,15 @@ namespace MAD.DataWarehouse.SignOnSite.Migrations
                 {
                     b.HasOne("MAD.DataWarehouse.SignOnSite.Api.Site", "Site")
                         .WithMany()
-                        .HasForeignKey("SiteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SiteId1");
 
                     b.OwnsOne("MAD.DataWarehouse.SignOnSite.Api.SiteAttendance+SACompany", "Company", b1 =>
                         {
-                            b1.Property<long>("SiteAttendanceId")
-                                .HasColumnType("bigint");
+                            b1.Property<int>("SiteAttendanceId")
+                                .HasColumnType("int");
 
-                            b1.Property<long>("Id")
-                                .HasColumnType("bigint");
+                            b1.Property<int>("Id")
+                                .HasColumnType("int");
 
                             b1.Property<string>("Name")
                                 .HasColumnType("nvarchar(max)");
@@ -99,8 +100,8 @@ namespace MAD.DataWarehouse.SignOnSite.Migrations
 
                     b.OwnsOne("MAD.DataWarehouse.SignOnSite.Api.SiteAttendance+SAUser", "User", b1 =>
                         {
-                            b1.Property<long>("SiteAttendanceId")
-                                .HasColumnType("bigint");
+                            b1.Property<int>("SiteAttendanceId")
+                                .HasColumnType("int");
 
                             b1.Property<string>("Email")
                                 .HasColumnType("nvarchar(max)");
@@ -108,8 +109,8 @@ namespace MAD.DataWarehouse.SignOnSite.Migrations
                             b1.Property<string>("FirstName")
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.Property<long>("Id")
-                                .HasColumnType("bigint");
+                            b1.Property<int>("Id")
+                                .HasColumnType("int");
 
                             b1.Property<string>("LastName")
                                 .HasColumnType("nvarchar(max)");
