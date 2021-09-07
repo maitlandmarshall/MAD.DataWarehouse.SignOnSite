@@ -31,14 +31,15 @@ namespace MAD.DataWarehouse.SignOnSite.Jobs
             await this.signOnSiteDbContext.BulkInsertOrUpdateAsync(sites);
 
             this.EnqueueNextPage(offset, apiResult);
-            this.EnqueueSiteAttendanceConsumerJob(sites);
+            this.EnqueueRelatedJobs(sites);
         }
 
-        private void EnqueueSiteAttendanceConsumerJob(IEnumerable<Site> sites)
+        private void EnqueueRelatedJobs(IEnumerable<Site> sites)
         {
             foreach (var s in sites)
             {
                 this.backgroundJobClient.Enqueue<SiteAttendanceApiConsumer>(f => f.GetSiteAttendances(s.Id, 0));
+                this.backgroundJobClient.Enqueue<SiteBriefingsWebApiConsumer>(f => f.GetSiteBriefings(s.Id, 0));
             }
         }
 

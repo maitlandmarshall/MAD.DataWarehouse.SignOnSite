@@ -5,6 +5,7 @@ using MAD.DataWarehouse.SignOnSite.Jobs;
 using MAD.Integration.Common.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Threading.Tasks;
 
 namespace MAD.DataWarehouse.SignOnSite
@@ -14,17 +15,29 @@ namespace MAD.DataWarehouse.SignOnSite
         public void ConfigureServices(IServiceCollection serviceDescriptors)
         {
             serviceDescriptors.AddIntegrationSettings<AppConfig>();
-            serviceDescriptors.AddHttpClient<SignOnSiteApiClient>();
+
+            serviceDescriptors.AddHttpClient<SignOnSiteApiClient>((svc, httpClient) =>
+            {
+                var appConfig = svc.GetRequiredService<AppConfig>();
+                httpClient.BaseAddress = new Uri("https://app.signonsite.com.au");
+                httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", appConfig.SignOnSiteKey);
+            });
+
+            serviceDescriptors.AddHttpClient<SignOnSiteWebApiClient>((svc, httpClient) =>
+            {
+                var appConfig = svc.GetRequiredService<AppConfig>();
+                httpClient.BaseAddress = new Uri("https://app.signonsite.com.au");
+            });
 
             serviceDescriptors.AddDbContext<SignOnSiteDbContext>((svc, opt) => opt.UseSqlServer(svc.GetRequiredService<AppConfig>().ConnectionString));
 
             serviceDescriptors.AddScoped<SiteApiConsumer>();
             serviceDescriptors.AddScoped<SiteAttendanceApiConsumer>();
+            serviceDescriptors.AddScoped<SiteBriefingsWebApiConsumer>();
         }
 
-        public async Task Configure()
+        public async Task Configure(AppConfig appConfig)
         {
-
         }
     }
 }

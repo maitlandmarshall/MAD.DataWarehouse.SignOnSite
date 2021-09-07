@@ -4,14 +4,16 @@ using MAD.DataWarehouse.SignOnSite.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MAD.DataWarehouse.SignOnSite.Migrations
 {
     [DbContext(typeof(SignOnSiteDbContext))]
-    partial class SignOnSiteDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210907010258_AddTable_SiteBriefing")]
+    partial class AddTable_SiteBriefing
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

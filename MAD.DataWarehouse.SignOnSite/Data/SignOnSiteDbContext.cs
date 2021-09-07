@@ -32,6 +32,15 @@ namespace MAD.DataWarehouse.SignOnSite.Data
 
                 cfg.HasOne(y => y.Site).WithMany().HasForeignKey(y => y.SiteId);
             });
+
+            modelBuilder.Entity<SiteBriefing>(cfg =>
+            {
+                cfg.HasKey(y => y.Id);
+                cfg.Property(y => y.Id).ValueGeneratedNever();
+
+                cfg.HasOne(y => y.Site).WithMany().HasForeignKey(y => y.SiteId);
+            });
+
         }
     }
 }

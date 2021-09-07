@@ -10,5 +10,8 @@ namespace MAD.DataWarehouse.SignOnSite
 
         public string ConnectionString { get; set; }
         public string SignOnSiteKey { get; set; }
+
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
 }
