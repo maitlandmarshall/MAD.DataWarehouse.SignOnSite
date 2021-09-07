@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MAD.DataWarehouse.SignOnSite.Migrations
 {
     [DbContext(typeof(SignOnSiteDbContext))]
-    [Migration("20210907010258_AddTable_SiteBriefing")]
-    partial class AddTable_SiteBriefing
+    [Migration("20210907015550_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,31 @@ namespace MAD.DataWarehouse.SignOnSite.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("MAD.DataWarehouse.SignOnSite.Api.BriefingLog", b =>
+                {
+                    b.Property<int>("BriefingId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTimeOffset>("Day")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset?>("EarliestAcknowledgedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset?>("EarliestSeenAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("BriefingId", "FirstName", "LastName", "Day", "EarliestAcknowledgedAt");
+
+                    b.ToTable("BriefingLog");
+                });
 
             modelBuilder.Entity("MAD.DataWarehouse.SignOnSite.Api.Site", b =>
                 {
@@ -113,6 +138,47 @@ namespace MAD.DataWarehouse.SignOnSite.Migrations
                     b.HasIndex("SiteId");
 
                     b.ToTable("SiteBriefing");
+                });
+
+            modelBuilder.Entity("MAD.DataWarehouse.SignOnSite.Api.BriefingLog", b =>
+                {
+                    b.HasOne("MAD.DataWarehouse.SignOnSite.Api.SiteBriefing", "Briefing")
+                        .WithMany()
+                        .HasForeignKey("BriefingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsOne("MAD.DataWarehouse.SignOnSite.Api.BriefingLog+BLCompany", "Company", b1 =>
+                        {
+                            b1.Property<int>("BriefingLogBriefingId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("BriefingLogFirstName")
+                                .HasColumnType("nvarchar(450)");
+
+                            b1.Property<string>("BriefingLogLastName")
+                                .HasColumnType("nvarchar(450)");
+
+                            b1.Property<DateTimeOffset>("BriefingLogDay")
+                                .HasColumnType("datetimeoffset");
+
+                            b1.Property<DateTimeOffset>("BriefingLogEarliestAcknowledgedAt")
+                                .HasColumnType("datetimeoffset");
+
+                            b1.Property<string>("Name")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("BriefingLogBriefingId", "BriefingLogFirstName", "BriefingLogLastName", "BriefingLogDay", "BriefingLogEarliestAcknowledgedAt");
+
+                            b1.ToTable("BriefingLog");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BriefingLogBriefingId", "BriefingLogFirstName", "BriefingLogLastName", "BriefingLogDay", "BriefingLogEarliestAcknowledgedAt");
+                        });
+
+                    b.Navigation("Briefing");
+
+                    b.Navigation("Company");
                 });
 
             modelBuilder.Entity("MAD.DataWarehouse.SignOnSite.Api.SiteAttendance", b =>

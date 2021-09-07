@@ -40,5 +40,15 @@ namespace MAD.DataWarehouse.SignOnSite.Api
 
             return response;
         }
+
+        public async Task<BriefingLogApiResponse> GetBriefingLogs(int briefingId)
+        {
+            var endpoint = $"/web/api/v2/briefings/{briefingId}/logs";
+
+            var responseJson = await this.httpClient.GetStringAsync(endpoint);
+            var response = JsonConvert.DeserializeObject<BriefingLogApiResponse>(responseJson);
+
+            return response;
+        }
     }
 }

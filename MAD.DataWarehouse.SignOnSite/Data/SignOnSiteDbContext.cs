@@ -41,6 +41,12 @@ namespace MAD.DataWarehouse.SignOnSite.Data
                 cfg.HasOne(y => y.Site).WithMany().HasForeignKey(y => y.SiteId);
             });
 
+            modelBuilder.Entity<BriefingLog>(cfg =>
+            {
+                cfg.HasKey(y => new { y.BriefingId, y.FirstName, y.LastName, y.Day, y.EarliestAcknowledgedAt });
+
+                cfg.OwnsOne(y => y.Company);
+            });
         }
     }
 }
