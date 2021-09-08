@@ -17,7 +17,7 @@ namespace MAD.DataWarehouse.SignOnSite.Api
             this.httpClient = httpClient;
         }
 
-        public async Task<ApiResponse<Site>> GetSites(int? limit = null, int? offset = null)
+        public async Task<PaginatedApiResponse<Site>> GetSites(int? limit = null, int? offset = null)
         {
             var endpoint = "/api/public/sites";
             var query = new Dictionary<string, object>
@@ -27,12 +27,12 @@ namespace MAD.DataWarehouse.SignOnSite.Api
             }.CreateQueryString();
 
             var responseJson = await this.httpClient.GetStringAsync($"{endpoint}?{query}");
-            var response = JsonConvert.DeserializeObject<ApiResponse<Site>>(responseJson);
+            var response = JsonConvert.DeserializeObject<PaginatedApiResponse<Site>>(responseJson);
 
             return response;
         }
 
-        public async Task<ApiResponse<SiteAttendance>> GetSiteAttendances(int siteId, int? limit = null, int? offset = null, DateTime? filter_start_time = null, DateTime? filter_end_time = null, string order_direction = null)
+        public async Task<PaginatedApiResponse<SiteAttendance>> GetSiteAttendances(int siteId, int? limit = null, int? offset = null, DateTime? filter_start_time = null, DateTime? filter_end_time = null, string order_direction = null)
         {
             var endpoint = $"/api/public/sites/{siteId}/attendances";
             var query = new Dictionary<string, object>
@@ -45,7 +45,7 @@ namespace MAD.DataWarehouse.SignOnSite.Api
             }.CreateQueryString();
 
             var responseJson = await this.httpClient.GetStringAsync($"{endpoint}?{query}");
-            var response = JsonConvert.DeserializeObject<ApiResponse<SiteAttendance>>(responseJson);
+            var response = JsonConvert.DeserializeObject<PaginatedApiResponse<SiteAttendance>>(responseJson);
 
             return response;
         }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MAD.DataWarehouse.SignOnSite.Api
 {
-    public class ApiResponse
+    public class PaginatedApiResponse
     {
         [JsonProperty("status")]
         public string Status { get; set; }
@@ -23,7 +23,7 @@ namespace MAD.DataWarehouse.SignOnSite.Api
         public int LastPage { get; set; }
     }
 
-    public class ApiResponse<TData> : ApiResponse
+    public class PaginatedApiResponse<TData> : PaginatedApiResponse
     {
         [JsonProperty("data")]
         public IEnumerable<TData> Data { get; set; }

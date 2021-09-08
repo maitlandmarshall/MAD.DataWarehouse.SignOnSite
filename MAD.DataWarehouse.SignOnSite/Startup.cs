@@ -32,6 +32,7 @@ namespace MAD.DataWarehouse.SignOnSite
             serviceDescriptors.AddDbContext<SignOnSiteDbContext>((svc, opt) => opt.UseSqlServer(svc.GetRequiredService<AppConfig>().ConnectionString));
 
             serviceDescriptors.AddScoped<SiteApiConsumer>();
+            serviceDescriptors.AddScoped<SiteWebApiConsumer>();
             serviceDescriptors.AddScoped<SiteAttendanceApiConsumer>();
             serviceDescriptors.AddScoped<SiteBriefingsWebApiConsumer>();
         }

@@ -43,7 +43,7 @@ namespace MAD.DataWarehouse.SignOnSite.Jobs
             }
         }
 
-        private void EnqueueNextPage(int offset, ApiResponse<Site> apiResult)
+        private void EnqueueNextPage(int offset, PaginatedApiResponse<Site> apiResult)
         {
             if (apiResult.LastPage == apiResult.CurrentPage)
                 return;

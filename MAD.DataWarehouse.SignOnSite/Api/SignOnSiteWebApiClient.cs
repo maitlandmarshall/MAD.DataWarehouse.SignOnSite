@@ -26,7 +26,25 @@ namespace MAD.DataWarehouse.SignOnSite.Api
             await this.httpClient.PostAsync("/login", formContent);
         }
 
-        public async Task<ApiResponse<SiteBriefing>> GetSiteBriefings(int siteId, int? limit = null, int? offset = null)
+        public async Task<UserSitesApiResponse> GetUserSites(int userId)
+        {
+            var endpoint = $"/web/api/v1/users/{userId}/sites";
+            var responseJson = await this.httpClient.GetStringAsync(endpoint);
+            var response = JsonConvert.DeserializeObject<UserSitesApiResponse>(responseJson);
+
+            return response;
+        }
+
+        public async Task<SiteUserApiResponse> GetSiteUsers(int siteId)
+        {
+            var endpoint = $"/web/api/v1/sites/{siteId}/users";
+            var responseJson = await this.httpClient.GetStringAsync(endpoint);
+            var response = JsonConvert.DeserializeObject<SiteUserApiResponse>(responseJson);
+
+            return response;
+        }
+
+        public async Task<PaginatedApiResponse<SiteBriefing>> GetSiteBriefings(int siteId, int? limit = null, int? offset = null)
         {
             var endpoint = $"/web/api/v2/sites/{siteId}/briefings";
             var query = new Dictionary<string, object>
@@ -36,7 +54,7 @@ namespace MAD.DataWarehouse.SignOnSite.Api
             }.CreateQueryString();
 
             var responseJson = await this.httpClient.GetStringAsync($"{endpoint}?{query}");
-            var response = JsonConvert.DeserializeObject<ApiResponse<SiteBriefing>>(responseJson);
+            var response = JsonConvert.DeserializeObject<PaginatedApiResponse<SiteBriefing>>(responseJson);
 
             return response;
         }

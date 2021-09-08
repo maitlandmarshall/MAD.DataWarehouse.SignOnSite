@@ -26,7 +26,7 @@ namespace MAD.DataWarehouse.SignOnSite
             var dbContext = services.GetRequiredService<SignOnSiteDbContext>();
             dbContext.Database.Migrate();
 
-            JobFactory.CreateRecurringJob<SiteApiConsumer>("GetSites", y => y.GetSites(0), Cron.Daily());
+            JobFactory.CreateRecurringJob<SiteWebApiConsumer>("GetSites", y => y.GetUserSites(), Cron.Daily());
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

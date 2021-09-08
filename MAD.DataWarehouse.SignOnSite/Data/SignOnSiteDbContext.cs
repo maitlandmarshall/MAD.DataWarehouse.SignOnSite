@@ -47,6 +47,22 @@ namespace MAD.DataWarehouse.SignOnSite.Data
 
                 cfg.OwnsOne(y => y.Company);
             });
+
+            modelBuilder.Entity<SiteUser>(cfg =>
+            {
+                cfg.HasKey(y => new { y.Id, y.SiteId });
+
+                cfg.OwnsOne(y => y.Induction, own =>
+                {
+                    own.OwnsOne(y => y.State, own =>
+                    {
+                        own.Property(y => y.SetAt).HasColumnType("date");
+                        own.OwnsOne(y => y.SetBy);
+                    });
+                });
+
+                cfg.OwnsOne(y => y.SiteCompany);
+            });
         }
     }
 }
