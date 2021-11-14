@@ -17,13 +17,6 @@ namespace MAD.DataWarehouse.SignOnSite
         {
             serviceDescriptors.AddIntegrationSettings<AppConfig>();
 
-            serviceDescriptors.AddHttpClient<SignOnSiteApiClient>((svc, httpClient) =>
-            {
-                var appConfig = svc.GetRequiredService<AppConfig>();
-                httpClient.BaseAddress = new Uri("https://app.signonsite.com.au");
-                httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", appConfig.SignOnSiteKey);
-            });
-
             serviceDescriptors.AddHttpClient<SignOnSiteWebApiClient>((svc, httpClient) =>
             {
                 var appConfig = svc.GetRequiredService<AppConfig>();
