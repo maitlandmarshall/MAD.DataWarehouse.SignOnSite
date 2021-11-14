@@ -2,6 +2,7 @@
 using MAD.DataWarehouse.SignOnSite.Api;
 using MAD.DataWarehouse.SignOnSite.Data;
 using MAD.DataWarehouse.SignOnSite.Jobs;
+using MAD.Integration.Common.Jobs;
 using MAD.Integration.Common.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,14 +32,14 @@ namespace MAD.DataWarehouse.SignOnSite
 
             serviceDescriptors.AddDbContext<SignOnSiteDbContext>((svc, opt) => opt.UseSqlServer(svc.GetRequiredService<AppConfig>().ConnectionString));
 
-            serviceDescriptors.AddScoped<SiteApiConsumer>();
             serviceDescriptors.AddScoped<SiteWebApiConsumer>();
-            serviceDescriptors.AddScoped<SiteAttendanceApiConsumer>();
             serviceDescriptors.AddScoped<SiteBriefingsWebApiConsumer>();
         }
 
-        public async Task Configure(AppConfig appConfig)
+        public void PostConfigure(SignOnSiteDbContext dbContext, IRecurringJobFactory recurringJobFactory)
         {
+            dbContext.Database.Migrate();
+            recurringJobFactory.CreateRecurringJob<SiteWebApiConsumer>("GetSites", y => y.GetUserSites(), Cron.Daily());
         }
     }
 }
