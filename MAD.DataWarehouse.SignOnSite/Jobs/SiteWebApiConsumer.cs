@@ -44,6 +44,7 @@ namespace MAD.DataWarehouse.SignOnSite.Jobs
             {
                 this.backgroundJobClient.Enqueue<SiteWebApiConsumer>(f => f.GetSiteUsers(s.Id));
                 this.backgroundJobClient.Enqueue<SiteBriefingsWebApiConsumer>(f => f.GetSiteBriefings(s.Id, 0));
+                this.backgroundJobClient.Enqueue<SiteAttendeesWebApiConsumer>(f => f.GetSiteAttendees(s.Id));
             }
         }
 

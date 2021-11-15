@@ -68,5 +68,16 @@ namespace MAD.DataWarehouse.SignOnSite.Api
 
             return response;
         }
+
+        public async Task<SiteAttendeesApiResponse> GetSiteAttendees(int siteId, DateTime attendanceStartUtc, DateTime attendanceEndUtc)
+        {
+            var dateFormat = "yyyy-MM-ddTHH:mm:ss.FFFZ";
+            var endpoint = $"/web/api/v2/sites/{siteId}/attendees?filter_attendance_start_utc={attendanceStartUtc.ToString(dateFormat)}&filter_attendance_end_utc={attendanceEndUtc.ToString(dateFormat)}&unarchived_worker_notes_only=true";
+
+            var responseJson = await this.httpClient.GetStringAsync(endpoint);
+            var response = JsonConvert.DeserializeObject<SiteAttendeesApiResponse>(responseJson);
+
+            return response;
+        }
     }
 }

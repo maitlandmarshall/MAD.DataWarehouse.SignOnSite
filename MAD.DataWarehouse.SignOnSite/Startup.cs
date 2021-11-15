@@ -17,16 +17,18 @@ namespace MAD.DataWarehouse.SignOnSite
         {
             serviceDescriptors.AddIntegrationSettings<AppConfig>();
 
-            serviceDescriptors.AddHttpClient<SignOnSiteWebApiClient>((svc, httpClient) =>
-            {
-                var appConfig = svc.GetRequiredService<AppConfig>();
-                httpClient.BaseAddress = new Uri("https://app.signonsite.com.au");
-            });
+            serviceDescriptors
+                .AddHttpClient<SignOnSiteWebApiClient>((svc, httpClient) =>
+                {
+                    var appConfig = svc.GetRequiredService<AppConfig>();
+                    httpClient.BaseAddress = new Uri("https://app.signonsite.com.au");
+                });
 
             serviceDescriptors.AddDbContext<SignOnSiteDbContext>((svc, opt) => opt.UseSqlServer(svc.GetRequiredService<AppConfig>().ConnectionString));
 
             serviceDescriptors.AddScoped<SiteWebApiConsumer>();
             serviceDescriptors.AddScoped<SiteBriefingsWebApiConsumer>();
+            serviceDescriptors.AddScoped<SiteAttendeesWebApiConsumer>();
         }
 
         public void PostConfigure(SignOnSiteDbContext dbContext, IRecurringJobFactory recurringJobFactory)
