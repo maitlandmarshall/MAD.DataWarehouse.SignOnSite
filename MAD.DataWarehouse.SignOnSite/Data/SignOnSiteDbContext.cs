@@ -1,10 +1,6 @@
 ﻿using MAD.DataWarehouse.SignOnSite.Api;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MAD.DataWarehouse.SignOnSite.Data
 {
@@ -74,6 +70,32 @@ namespace MAD.DataWarehouse.SignOnSite.Data
                     y => y.ToString(),
                     y => JArray.Parse(y));
             });
+
+            modelBuilder.Entity<SiteInduction>(cfg =>
+            {
+                cfg.HasKey(y => new { y.Id, y.UserId });
+                cfg.Property<int>("SiteId").ValueGeneratedNever();
+
+                cfg.Property(y => y.Id).ValueGeneratedNever();
+                cfg.Property(y => y.UserId).ValueGeneratedNever();
+
+                cfg.OwnsOne(y => y.SiteCompany);
+
+                cfg.OwnsMany(y => y.UnsubmittedForms, cfg =>
+                {
+                    cfg.WithOwner().HasForeignKey("Id");
+                    cfg.Property(y => y.Id).ValueGeneratedNever();
+                });
+
+                cfg.OwnsMany(y => y.CompletedInductions, cfg =>
+                {
+                    cfg.WithOwner().HasForeignKey("Id");
+                    cfg.Property(y => y.Id).ValueGeneratedNever();
+                    cfg.OwnsOne(y => y.StatusSetBy);
+                });
+            });
+
+
         }
     }
 }

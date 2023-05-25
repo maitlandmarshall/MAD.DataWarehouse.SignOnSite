@@ -78,7 +78,7 @@ namespace MAD.DataWarehouse.SignOnSite.Api
             return response;
         }
 
-        public async Task<PaginatedApiResponse<SiteBriefing>> GetSiteInductions(int siteId, int? limit = null, int? offset = null)
+        public async Task<PaginatedApiResponse<SiteInduction>> GetSiteInductions(int siteId, int? limit = null, int? offset = null)
         {
             var endpoint = $"/web/api/v2/sites/{siteId}/inductions";
             var query = new Dictionary<string, object>
@@ -88,7 +88,7 @@ namespace MAD.DataWarehouse.SignOnSite.Api
             }.CreateQueryString();
 
             var responseJson = await this.httpClient.GetStringAsync($"{endpoint}?{query}");
-            var response = JsonConvert.DeserializeObject<PaginatedApiResponse<SiteBriefing>>(responseJson);
+            var response = JsonConvert.DeserializeObject<PaginatedApiResponse<SiteInduction>>(responseJson);
 
             return response;
         }

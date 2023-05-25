@@ -6,10 +6,10 @@ namespace MAD.DataWarehouse.SignOnSite.Api
     public partial class SiteInduction
     {
         [JsonProperty("id")]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [JsonProperty("user_id")]
-        public long UserId { get; set; }
+        public int UserId { get; set; }
 
         [JsonProperty("first_name")]
         public string FirstName { get; set; }
@@ -39,7 +39,7 @@ namespace MAD.DataWarehouse.SignOnSite.Api
     public partial class CompletedInduction
     {
         [JsonProperty("id")]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [JsonProperty("status")]
         public string Status { get; set; }
@@ -57,7 +57,7 @@ namespace MAD.DataWarehouse.SignOnSite.Api
         public string Type { get; set; }
 
         [JsonProperty("number")]
-        public long Number { get; set; }
+        public int Number { get; set; }
 
         [JsonProperty("form_name")]
         public string FormName { get; set; }
@@ -66,13 +66,13 @@ namespace MAD.DataWarehouse.SignOnSite.Api
         public string FormType { get; set; }
 
         [JsonProperty("form_id")]
-        public long? FormId { get; set; }
+        public int? FormId { get; set; }
     }
 
     public partial class StatusSetBy
     {
         [JsonProperty("id")]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [JsonProperty("last_name")]
         public string LastName { get; set; }
@@ -84,7 +84,7 @@ namespace MAD.DataWarehouse.SignOnSite.Api
     public partial class SiteCompany
     {
         [JsonProperty("id")]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -93,7 +93,7 @@ namespace MAD.DataWarehouse.SignOnSite.Api
     public partial class UnsubmittedForm
     {
         [JsonProperty("id")]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }
