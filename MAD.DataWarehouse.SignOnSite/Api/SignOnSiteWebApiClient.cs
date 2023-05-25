@@ -2,9 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace MAD.DataWarehouse.SignOnSite.Api
 {
@@ -76,6 +74,21 @@ namespace MAD.DataWarehouse.SignOnSite.Api
 
             var responseJson = await this.httpClient.GetStringAsync(endpoint);
             var response = JsonConvert.DeserializeObject<SiteAttendeesApiResponse>(responseJson);
+
+            return response;
+        }
+
+        public async Task<PaginatedApiResponse<SiteBriefing>> GetSiteInductions(int siteId, int? limit = null, int? offset = null)
+        {
+            var endpoint = $"/web/api/v2/sites/{siteId}/inductions";
+            var query = new Dictionary<string, object>
+            {
+                {nameof(limit), limit },
+                {nameof(offset), offset }
+            }.CreateQueryString();
+
+            var responseJson = await this.httpClient.GetStringAsync($"{endpoint}?{query}");
+            var response = JsonConvert.DeserializeObject<PaginatedApiResponse<SiteBriefing>>(responseJson);
 
             return response;
         }

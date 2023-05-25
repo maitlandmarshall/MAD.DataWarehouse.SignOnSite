@@ -1,11 +1,8 @@
 ﻿using MAD.DataWarehouse.SignOnSite.Api;
 using MAD.DataWarehouse.SignOnSite.Data;
-using MAD.Integration.Common.EFCore;
-using MAD.Integration.Common.Jobs;
+using MAD.Extensions.EFCore;
+using MIFCore.Hangfire;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MAD.DataWarehouse.SignOnSite.Jobs

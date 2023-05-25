@@ -2,11 +2,8 @@
 using Hangfire;
 using MAD.DataWarehouse.SignOnSite.Api;
 using MAD.DataWarehouse.SignOnSite.Data;
-using MAD.Integration.Common.EFCore;
-using System;
-using System.Collections.Generic;
+using MAD.Extensions.EFCore;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MAD.DataWarehouse.SignOnSite.Jobs

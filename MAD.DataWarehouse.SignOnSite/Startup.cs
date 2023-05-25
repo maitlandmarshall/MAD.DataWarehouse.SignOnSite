@@ -2,12 +2,11 @@
 using MAD.DataWarehouse.SignOnSite.Api;
 using MAD.DataWarehouse.SignOnSite.Data;
 using MAD.DataWarehouse.SignOnSite.Jobs;
-using MAD.Integration.Common.Jobs;
-using MAD.Integration.Common.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using MIFCore.Hangfire;
+using MIFCore.Settings;
 using System;
-using System.Threading.Tasks;
 
 namespace MAD.DataWarehouse.SignOnSite
 {
@@ -31,7 +30,7 @@ namespace MAD.DataWarehouse.SignOnSite
             serviceDescriptors.AddScoped<SiteAttendeesWebApiConsumer>();
         }
 
-        public void PostConfigure(SignOnSiteDbContext dbContext, IRecurringJobFactory recurringJobFactory)
+        public void PostConfigure(SignOnSiteDbContext dbContext, IRecurringJobManager recurringJobFactory)
         {
             dbContext.Database.Migrate();
             recurringJobFactory.CreateRecurringJob<SiteWebApiConsumer>("GetSites", y => y.GetUserSites(), Cron.Daily());
