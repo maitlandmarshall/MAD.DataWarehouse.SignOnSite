@@ -73,7 +73,7 @@ namespace MAD.DataWarehouse.SignOnSite.Data
 
             modelBuilder.Entity<SiteInduction>(cfg =>
             {
-                cfg.HasKey(y => new { y.Id, y.UserId });
+                cfg.HasKey(y => y.Id);
                 cfg.Property<int>("SiteId").ValueGeneratedNever();
 
                 cfg.Property(y => y.Id).ValueGeneratedNever();
@@ -83,13 +83,11 @@ namespace MAD.DataWarehouse.SignOnSite.Data
 
                 cfg.OwnsMany(y => y.UnsubmittedForms, cfg =>
                 {
-                    cfg.WithOwner().HasForeignKey("Id");
                     cfg.Property(y => y.Id).ValueGeneratedNever();
                 });
 
                 cfg.OwnsMany(y => y.CompletedInductions, cfg =>
                 {
-                    cfg.WithOwner().HasForeignKey("Id");
                     cfg.Property(y => y.Id).ValueGeneratedNever();
                     cfg.OwnsOne(y => y.StatusSetBy);
                 });

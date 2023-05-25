@@ -28,6 +28,7 @@ namespace MAD.DataWarehouse.SignOnSite
             serviceDescriptors.AddScoped<SiteWebApiConsumer>();
             serviceDescriptors.AddScoped<SiteBriefingsWebApiConsumer>();
             serviceDescriptors.AddScoped<SiteAttendeesWebApiConsumer>();
+            serviceDescriptors.AddScoped<SiteInductionsWebApiConsumer>();
         }
 
         public void PostConfigure(SignOnSiteDbContext dbContext, IRecurringJobManager recurringJobFactory)

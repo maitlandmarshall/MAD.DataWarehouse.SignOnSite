@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace MAD.DataWarehouse.SignOnSite.Api
 {
@@ -30,10 +31,10 @@ namespace MAD.DataWarehouse.SignOnSite.Api
         public string Type { get; set; }
 
         [JsonProperty("unsubmitted_forms")]
-        public UnsubmittedForm[] UnsubmittedForms { get; set; }
+        public List<UnsubmittedForm> UnsubmittedForms { get; set; }
 
         [JsonProperty("completed_inductions")]
-        public CompletedInduction[] CompletedInductions { get; set; }
+        public List<CompletedInduction> CompletedInductions { get; set; }
     }
 
     public partial class CompletedInduction

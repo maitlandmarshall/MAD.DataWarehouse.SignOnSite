@@ -1,6 +1,7 @@
 ﻿using Hangfire;
 using MAD.DataWarehouse.SignOnSite.Api;
 using MAD.DataWarehouse.SignOnSite.Data;
+using MAD.Extensions.EFCore;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,7 +22,7 @@ namespace MAD.DataWarehouse.SignOnSite.Jobs
             this.backgroundJobClient = backgroundJobClient;
         }
 
-        public async Task GetSiteBriefings(int siteId, int offset = 0)
+        public async Task GetSiteInductions(int siteId, int offset = 0)
         {
             await this.signOnSiteWebApiClient.Login(this.appConfig.Email, this.appConfig.Password);
 
@@ -31,7 +32,10 @@ namespace MAD.DataWarehouse.SignOnSite.Jobs
             foreach (var ind in inductions)
             {
                 this.dbContext.Entry(ind).Property("SiteId").CurrentValue = siteId;
+                this.dbContext.Upsert(ind);
             }
+
+            await this.dbContext.SaveChangesAsync();
 
             if (result.CurrentPage == result.LastPage)
                 return;

@@ -4,6 +4,7 @@ using MAD.DataWarehouse.SignOnSite.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MAD.DataWarehouse.SignOnSite.Migrations
 {
     [DbContext(typeof(SignOnSiteDbContext))]
-    partial class SignOnSiteDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230525040438_AddTable_SiteInductions")]
+    partial class AddTable_SiteInductions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
